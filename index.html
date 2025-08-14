@@ -142,8 +142,7 @@
           </div>
         </div>
 
-        <div id="emgDisplay" class="card pad mt12" style="background:#ffffff20;border-color:#ffffff40"></div>
-      </div>
+        <div id="emgDisplay" class="hidden mt12"></div>
     </section>
 
     <!-- ======= HEALTH CATEGORIES ======= -->
@@ -431,20 +430,33 @@
        EMERGENCY: CPR & CONTACTS
        ============================================================ */
     function showCPR(){
-      emgDisplay.innerHTML = cardBlock("CPR — Step by Step", DB.emergency.cprSteps);
-    }
-    function showContacts(){
-      const rows = DB.emergency.contactsHYD.map(c=>{
-        return `<div class="tap call">
-          <div class="icon">📞</div>
-          <div>
-            <div class="strong">${c.label}</div>
-            <div class="row small"><a href="tel:${c.number}" class="tag">Call ${c.number}</a><span class="muted">Hyderabad/Telangana</span></div>
-          </div>
-        </div>`;
-      }).join('');
-      emgDisplay.innerHTML = `<div class="card pad"><div class="title mb8">Emergency Contacts</div>${rows}</div>`;
-    }
+  emgDisplay.classList.remove('hidden');
+  emgDisplay.innerHTML = `
+    <div class="card pad" style="background:#fff;border-color:hsl(var(--border))">
+      ${cardBlock("CPR — Step by Step", DB.emergency.cprSteps)}
+    </div>`;
+}
+
+function showContacts(){
+  emgDisplay.classList.remove('hidden');
+  const rows = DB.emergency.contactsHYD.map(c=>{
+    return `<div class="tap call" style="background:hsl(var(--muted));border-color:hsl(var(--border))">
+      <div class="icon" style="background:white;border-color:hsl(var(--border))">📞</div>
+      <div>
+        <div class="strong">${c.label}</div>
+        <div class="row small">
+          <a href="tel:${c.number}" class="tag">Call ${c.number}</a>
+          <span class="muted">Hyderabad/Telangana</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  emgDisplay.innerHTML = `
+    <div class="card pad" style="background:#fff;border-color:hsl(var(--border))">
+      <div class="title mb8">Emergency Contacts</div>
+      ${rows}
+    </div>`;
+}
 
     /* ============================================================
        INPUT MODES
